@@ -1,0 +1,36 @@
+name: Test Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        targets: x86_64-pc-windows-msvc
+    
+    - name: Install frontend dependencies
+      run: npm ci
+    
+    - name: Install Tauri CLI
+      run: npm install -g @tauri-apps/cli@latest
+    
+    - name: Test build
+      run: tauri build --target x86_64-pc-windows-msvc
+    
+    - name: List build artifacts
+      run: |
+        echo "Build completed successfully!"
+        dir src-tauri\target\x86_64-pc-windows-msvc\release\bundle\ /s
