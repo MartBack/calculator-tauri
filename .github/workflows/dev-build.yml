@@ -13,13 +13,13 @@ jobs:
       matrix:
         include:
           - platform: 'windows-latest'
-            args: '--target x86_64-pc-windows-msvc'
+            target: 'x86_64-pc-windows-msvc'
             os: 'windows'
           - platform: 'macos-latest'
-            args: '--target x86_64-apple-darwin'
+            target: 'x86_64-apple-darwin'
             os: 'macos'
           - platform: 'ubuntu-latest'
-            args: '--target x86_64-unknown-linux-gnu'
+            target: 'x86_64-unknown-linux-gnu'
             os: 'linux'
 
     runs-on: ${{ matrix.platform }}
@@ -36,7 +36,7 @@ jobs:
     - name: Install Rust
       uses: dtolnay/rust-toolchain@stable
       with:
-        targets: ${{ matrix.args == '--target x86_64-pc-windows-msvc' && 'x86_64-pc-windows-msvc' || matrix.args == '--target x86_64-apple-darwin' && 'x86_64-apple-darwin' || 'x86_64-unknown-linux-gnu' }}
+        targets: ${{ matrix.target }}
 
     - name: Install dependencies (Ubuntu only)
       if: matrix.os == 'linux'
@@ -47,13 +47,16 @@ jobs:
     - name: Install frontend dependencies
       run: npm ci
 
+    - name: Install Tauri CLI
+      run: npm install -g @tauri-apps/cli@latest
+
     - name: Build the app
-      run: npm run build ${{ matrix.args }}
+      run: tauri build --target ${{ matrix.target }}
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: calculator-dev-${{ matrix.os }}
         path: |
-          src-tauri/target/release/bundle/
+          src-tauri/target/${{ matrix.target }}/release/bundle/
         retention-days: 7
