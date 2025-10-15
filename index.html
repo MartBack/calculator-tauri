@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="theme-selector">
+        <label for="theme-select">Theme:</label>
+        <select id="theme-select" onchange="changeTheme(this.value)">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+            <option value="neon">Neon</option>
+            <option value="retro">Retro</option>
+        </select>
+    </div>
+    
+    <div class="calculator">
+        <div class="display">
+            <div id="result">0</div>
+        </div>
+        <div class="buttons">
+            <button class="btn clear" onclick="clearAll()" tabindex="0">C</button>
+            <button class="btn clear" onclick="clearEntry()" tabindex="0">CE</button>
+            <button class="btn operator" onclick="deleteLast()" tabindex="0">⌫</button>
+            <button class="btn operator" onclick="inputOperator('/')" tabindex="0">÷</button>
+            
+            <button class="btn number" onclick="inputNumber('7')" tabindex="0">7</button>
+            <button class="btn number" onclick="inputNumber('8')" tabindex="0">8</button>
+            <button class="btn number" onclick="inputNumber('9')" tabindex="0">9</button>
+            <button class="btn operator" onclick="inputOperator('*')" tabindex="0">×</button>
+            
+            <button class="btn number" onclick="inputNumber('4')" tabindex="0">4</button>
+            <button class="btn number" onclick="inputNumber('5')" tabindex="0">5</button>
+            <button class="btn number" onclick="inputNumber('6')" tabindex="0">6</button>
+            <button class="btn operator" onclick="inputOperator('-')" tabindex="0">-</button>
+            
+            <button class="btn number" onclick="inputNumber('1')" tabindex="0">1</button>
+            <button class="btn number" onclick="inputNumber('2')" tabindex="0">2</button>
+            <button class="btn number" onclick="inputNumber('3')" tabindex="0">3</button>
+            <button class="btn operator" onclick="inputOperator('+')" tabindex="0">+</button>
+            
+            <button class="btn number zero" onclick="inputNumber('0')" tabindex="0">0</button>
+            <button class="btn number" onclick="inputDecimal()" tabindex="0">.</button>
+            <button class="btn equals" onclick="calculate()" tabindex="0">=</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
